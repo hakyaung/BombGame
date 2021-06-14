@@ -17,13 +17,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.instance.isGameover) { return; }
         translation = Input.GetAxis("Vertical") * 10f;
         rotation = Input.GetAxis("Horizontal") * 100f;
 
         transform.Translate(0, 0, translation * Time.deltaTime);
         transform.Rotate(0, rotation * Time.deltaTime, 0);
 
-        if(translation != 0 || rotation != 0)
+        if (translation != 0 || rotation != 0)
         {
             ani.SetBool("walk", true);
         }
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (GameManager.instance.isGameover) { return; }
         if(collision.collider.tag == "Obstacle")
         {
             ani.SetTrigger("damage");
